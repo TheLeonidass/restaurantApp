@@ -9,10 +9,10 @@ A React Native mobile application with a Node.js backend and MariaDB database, d
 - [Project Overview](#project-overview)
 - [Prerequisites](#prerequisites)
 - [Setup Instructions](#setup-instructions)
+- [Database Setup](#database-setup)
 - [Running the Backend](#running-the-backend)
 - [Running the React Native App](#running-the-react-native-app)
-- [Database Setup](#database-setup)
-- [Environment Variables](#environment-variables)
+
 - [Notes](#notes)
 
 ---
@@ -63,7 +63,10 @@ Edit .env and update with your database credentials and any other required varia
 
 ### 4. Make changes to config.js
 
-In the config.js change the IP address with YOUR IP address and the PORT that you chose to run the backend.
+In the config.js file change the IP address with YOUR IP address and the PORT that you chose to run the backend. To see your IP address run:
+```
+ipconfig
+```
 
 ---
 
