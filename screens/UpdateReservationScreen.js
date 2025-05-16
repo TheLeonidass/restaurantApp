@@ -1,9 +1,17 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, Button, StyleSheet, Alert } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  StyleSheet,
+  Alert,
+  TouchableOpacity,
+} from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 import { API_URL } from "../config";
 import DateTimePicker from "@react-native-community/datetimepicker";
+import AppBackground from "../components/AppBackground";
 
 const formatLocalDate = (date) =>
   `${date.getFullYear()}-${(date.getMonth() + 1)
@@ -22,19 +30,19 @@ const UpdateReservationScreen = ({ route, navigation }) => {
     return d;
   });
   const [people, setPeople] = useState(String(reservation.people_count));
-
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [showTimePicker, setShowTimePicker] = useState(false);
 
   const onChangeDate = (event, selectedDate) => {
     setShowDatePicker(false);
     if (selectedDate) {
-      const localDate = new Date(
-        selectedDate.getFullYear(),
-        selectedDate.getMonth(),
-        selectedDate.getDate()
+      setDate(
+        new Date(
+          selectedDate.getFullYear(),
+          selectedDate.getMonth(),
+          selectedDate.getDate()
+        )
       );
-      setDate(localDate);
     }
   };
 
@@ -84,7 +92,6 @@ const UpdateReservationScreen = ({ route, navigation }) => {
           },
         }
       );
-
       Alert.alert("Success", "Reservation updated!");
       navigation.goBack();
     } catch (err) {
@@ -94,57 +101,67 @@ const UpdateReservationScreen = ({ route, navigation }) => {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Update Reservation</Text>
+    <AppBackground>
+      <View style={styles.container}>
+        <Text style={styles.title}>Update Reservation</Text>
 
-      <Text style={styles.label}>📅 Date</Text>
-      <Button
-        title={formatLocalDate(date)}
-        onPress={() => setShowDatePicker(true)}
-      />
-      {showDatePicker && (
-        <DateTimePicker
-          value={date}
-          mode="date"
-          display="default"
-          onChange={onChangeDate}
-          minimumDate={new Date()}
+        <Text style={styles.label}>📅 Date</Text>
+        <TouchableOpacity
+          style={styles.pickerButton}
+          onPress={() => setShowDatePicker(true)}
+        >
+          <Text style={styles.pickerText}>{formatLocalDate(date)}</Text>
+        </TouchableOpacity>
+        {showDatePicker && (
+          <DateTimePicker
+            value={date}
+            mode="date"
+            display="default"
+            onChange={onChangeDate}
+            minimumDate={new Date()}
+          />
+        )}
+
+        <Text style={styles.label}>⏰ Time</Text>
+        <TouchableOpacity
+          style={styles.pickerButton}
+          onPress={() => setShowTimePicker(true)}
+        >
+          <Text style={styles.pickerText}>
+            {time.toTimeString().slice(0, 5)}
+          </Text>
+        </TouchableOpacity>
+        {showTimePicker && (
+          <DateTimePicker
+            value={time}
+            mode="time"
+            display="default"
+            onChange={onChangeTime}
+          />
+        )}
+
+        <Text style={styles.label}>👥 People</Text>
+        <TextInput
+          style={styles.input}
+          value={people}
+          onChangeText={setPeople}
+          placeholder="Number of people"
+          keyboardType="numeric"
         />
-      )}
 
-      <Text style={styles.label}>⏰ Time</Text>
-      <Button
-        title={time.toTimeString().slice(0, 5)}
-        onPress={() => setShowTimePicker(true)}
-      />
-      {showTimePicker && (
-        <DateTimePicker
-          value={time}
-          mode="time"
-          display="default"
-          onChange={onChangeTime}
-        />
-      )}
-
-      <Text style={styles.label}>👥 People</Text>
-      <TextInput
-        style={styles.input}
-        value={people}
-        onChangeText={setPeople}
-        placeholder="Number of people"
-        keyboardType="numeric"
-      />
-
-      <View style={styles.buttonGroup}>
-        <Button title="Update" onPress={handleUpdate} />
-        <View style={{ height: 10 }} />
-        <Button
-          title="Cancel"
-          onPress={() => navigation.goBack()}
-          color="gray"
-        />
+        <View style={styles.buttonGroup}>
+          <TouchableOpacity style={styles.primaryButton} onPress={handleUpdate}>
+            <Text style={styles.buttonText}>Update</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.cancelButton}
+            onPress={() => navigation.goBack()}
+          >
+            <Text style={styles.buttonText}>↩️ Cancel</Text>
+          </TouchableOpacity>
+        </View>
       </View>
-    </View>
+    </AppBackground>
   );
 };
 
@@ -156,31 +173,55 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 26,
     fontWeight: "bold",
-    marginBottom: 20,
-    alignSelf: "center",
-    color: "#333",
+    color: "white",
+    textAlign: "center",
+    marginBottom: 24,
   },
   label: {
-    fontWeight: "bold",
-    marginTop: 12,
-    marginBottom: 6,
     fontSize: 16,
-    color: "#444",
+    fontWeight: "bold",
+    color: "#eee",
+    marginTop: 14,
+    marginBottom: 6,
+  },
+  pickerButton: {
+    backgroundColor: "rgba(255,255,255,0.9)",
+    padding: 12,
+    borderRadius: 10,
+    marginBottom: 10,
+  },
+  pickerText: {
+    fontSize: 16,
+    color: "#333",
+    textAlign: "center",
   },
   input: {
-    borderWidth: 1,
-    borderColor: "#ccc",
+    backgroundColor: "rgba(255,255,255,0.9)",
     borderRadius: 10,
-    padding: 10,
-    marginBottom: 15,
+    padding: 12,
     fontSize: 16,
-    backgroundColor: "#fff",
+    marginBottom: 20,
+    color: "#000",
   },
   buttonGroup: {
     marginTop: 30,
   },
-  buttonSpacing: {
-    height: 10,
+  primaryButton: {
+    backgroundColor: "#1e90ff",
+    paddingVertical: 14,
+    borderRadius: 10,
+    marginBottom: 12,
+  },
+  cancelButton: {
+    backgroundColor: "#888",
+    paddingVertical: 14,
+    borderRadius: 10,
+  },
+  buttonText: {
+    color: "#fff",
+    fontWeight: "bold",
+    fontSize: 16,
+    textAlign: "center",
   },
 });
 

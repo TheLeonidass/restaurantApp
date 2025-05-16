@@ -55,6 +55,9 @@ const SelectRestaurantScreen = ({ navigation }) => {
             <View style={styles.card}>
               <Text style={styles.name}>{item.name}</Text>
               <Text style={styles.description}>{item.description}</Text>
+              {item.location && (
+                <Text style={styles.location}>📍 {item.location}</Text>
+              )}
               <TouchableOpacity
                 style={styles.button}
                 onPress={() => handleSelect(item)}
@@ -118,6 +121,11 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+  },
+  location: {
+    fontSize: 13,
+    color: "#666",
+    marginBottom: 10,
   },
 });
 

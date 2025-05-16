@@ -130,7 +130,7 @@ const CreateReservationScreen = ({ route, navigation }) => {
           />
         )}
 
-        <Text style={styles.label}>👥 People Count</Text>
+        <Text style={styles.label}>👥 People</Text>
         <TextInput
           style={styles.input}
           placeholder="Enter number of people"
@@ -144,7 +144,9 @@ const CreateReservationScreen = ({ route, navigation }) => {
           style={[styles.button, { marginTop: 24, backgroundColor: "#28a745" }]}
           onPress={handleCreateReservation}
         >
-          <Text style={styles.buttonText}>✅ Reserve</Text>
+          <Text style={[styles.buttonText, { color: "white" }]}>
+            ✅ Reserve
+          </Text>
         </TouchableOpacity>
       </ScrollView>
     </AppBackground>
@@ -183,7 +185,7 @@ const styles = StyleSheet.create({
     color: "#000",
   },
   button: {
-    backgroundColor: "#1e90ff",
+    backgroundColor: "rgba(255,255,255,0.9)",
     borderRadius: 8,
     paddingVertical: 12,
     paddingHorizontal: 16,
@@ -191,7 +193,7 @@ const styles = StyleSheet.create({
     marginTop: 6,
   },
   buttonText: {
-    color: "#fff",
+    color: "#333",
     fontWeight: "600",
     fontSize: 16,
   },
