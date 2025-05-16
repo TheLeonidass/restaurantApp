@@ -111,5 +111,5 @@ This will build the project and you can scan the QR Code to use it on your phone
 
 ## Notes
 
-Make sure to put your correct credentials in the .env file.
-Change the config.js file with YOUR IP address and PORT.
+# Make sure to put your correct credentials in the .env file.
+# Change the config.js file with YOUR IP address and PORT.
