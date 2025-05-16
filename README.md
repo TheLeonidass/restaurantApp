@@ -14,8 +14,6 @@ A React Native mobile application with a Node.js backend and MariaDB database, d
 - [Database Setup](#database-setup)
 - [Environment Variables](#environment-variables)
 - [Notes](#notes)
-- [Contributing](#contributing)
-- [License](#license)
 
 ---
 
@@ -63,18 +61,52 @@ cp .env.example .env
 ```
 Edit .env and update with your database credentials and any other required variables.
 
+### 4. Make changes to config.js
+
+In the config.js change the IP address with YOUR IP address and the PORT that you chose to run the backend.
+
+---
+
 ## Database Setup
 
 ### 1. Create the MariaDB database
+
 Log into your MariaDB client and run:
 ```
-CREATE DATABASE restaurantApp;
+CREATE DATABASE restaurant_app;
 ```
 
 ### 2. Import the database schema
+
 Schema is located at database/schema.sql
 or
 Run this command in the terminal
 ```
-mysql -u your_db_user -p restaurantApp < database/schema.sql
+mysql -u your_db_user -p restaurant_app < database/schema.sql
 ```
+
+---
+
+## Running the Backend
+
+Start the Node.js server:
+```
+node server.js
+```
+
+---
+
+## Running the React Native App
+
+For Android make sure you have Expo Go installed on your device:
+```
+npx expo start
+```
+This will build the project and you can scan the QR Code to use it on your phone.
+
+---
+
+## Notes
+
+Make sure to put your correct credentials in the .env file.
+Change the config.js file with YOUR IP address and PORT.
