@@ -55,10 +55,7 @@ npm install
 
 ### 3. Configure environment variables
 
-Create a .env file in the root folder by copying the example:
-```bash
-cp .env.example .env
-```
+Rename the .env.example file in the root folder to .env
 Edit .env and update with your database credentials and any other required variables.
 
 ### 4. Make changes to config.js
